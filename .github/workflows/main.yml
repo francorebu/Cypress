@@ -1,10 +1,10 @@
 name: Run Cypress Tests
 
 on:
-  schedule:
-    - cron: '0 9 * * *'
-  workflow_dispatch:
-  
+  push:
+    branches:
+      - main
+
 jobs:
   build:
     runs-on: windows-latest
@@ -23,3 +23,9 @@ jobs:
 
       - name: Run Cypress tests
         run: npx cypress run
+
+      - name: Send Slack notification
+        if: always()
+        run: |
+          SLACK_WEBHOOK="https://hooks.slack.com/services/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"
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"Cypress tests finished with status: ${{ job.status }}\"}" $SLACK_WEBHOOK
