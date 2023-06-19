@@ -26,17 +26,7 @@ jobs:
 
       - name: Send Slack notification
         if: always()
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const webhookURL = "https://hooks.slack.com/services/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";
-            const message = {
-              text: `Cypress tests finished with status: ${{ job.status }}`
-            };
-            await fetch(webhookURL, {
-              method: "POST",
-              headers: {
-                "Content-type": "application/json"
-              },
-              body: JSON.stringify(message)
-            });
+        run: |
+          SLACK_WEBHOOK="https://hooks.slack.com/services/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"
+          npm install axios
+          node -e "const axios = require('axios'); axios.post(process.env.SLACK_WEBHOOK, { text: 'Cypress tests finished with status: ${{ job.status }}' })"
