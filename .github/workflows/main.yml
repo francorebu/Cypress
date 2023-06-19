@@ -27,5 +27,5 @@ jobs:
       - name: Send Slack notification
         if: always()
         run: |
-          SLACK_WEBHOOK="<YOUR_WEBHOOK_URL>"
+          SLACK_WEBHOOK="https://hooks.slack.com/services/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"
           curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"Cypress tests finished with status: ${{ job.status }}\"}" $SLACK_WEBHOOK
