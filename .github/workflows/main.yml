@@ -27,6 +27,7 @@ jobs:
       - name: Send Slack notification
         if: always()
         run: |
-          SLACK_WEBHOOK="https://hooks.slack.com/services/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"
+          $env:SLACK_WEBHOOK="https://hooks.slack.com/services/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"
           npm install axios
           node -e "const axios = require('axios'); axios.post(process.env.SLACK_WEBHOOK, { text: 'Cypress tests finished with status: ${{ job.status }}' })"
+
